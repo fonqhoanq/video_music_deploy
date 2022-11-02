@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  watch_at: MyString
+  length: 1
+  user: one
+  video: one
+
+two:
+  watch_at: MyString
+  length: 1
+  user: two
+  video: two
