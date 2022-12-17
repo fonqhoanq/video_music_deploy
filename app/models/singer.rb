@@ -8,7 +8,7 @@ class Singer < ApplicationRecord
   validates :age, presence: true, numericality: { greater_than: 0}
   validates :email, presence: true, length: {minimum:10, maximum:255}, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false}
 
-  has_secure_password
+  # has_secure_password
   private
   def downcase_email
     self.email.downcase!
