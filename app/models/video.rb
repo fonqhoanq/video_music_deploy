@@ -1,4 +1,5 @@
 class Video < ApplicationRecord
   belongs_to :singer
-  mount_uploader :url, VideoUploader
+  has_one_attached :url
+  enum category_id: {pop: 0, rock: 1}
 end
