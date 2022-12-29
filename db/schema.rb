@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_17_070140) do
+ActiveRecord::Schema.define(version: 2022_12_26_142310) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -118,11 +118,11 @@ ActiveRecord::Schema.define(version: 2022_12_17_070140) do
     t.string "title"
     t.string "description"
     t.integer "category_id"
-    t.string "url"
-    t.integer "views"
+    t.integer "views", default: 0
     t.bigint "singer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "public", default: false
     t.index ["singer_id"], name: "index_videos_on_singer_id"
   end
 
