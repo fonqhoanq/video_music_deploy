@@ -1,5 +1,6 @@
 class SingersController < ApplicationController
-    before_action :set_singer, only: [:show, :update, :destroy]
+  skip_before_action :verify_authenticity_token
+  before_action :set_singer, only: [:show, :update, :destroy]
   
     # GET /singers
     def index
