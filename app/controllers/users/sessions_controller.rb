@@ -1,7 +1,8 @@
 # app/controllers/users/sessions_controller.rb
 class Users::SessionsController < Devise::SessionsController
     respond_to :json
-  
+    skip_before_action :verify_authenticity_token
+
     private
   
     def respond_with(_resource, _opts = {})
