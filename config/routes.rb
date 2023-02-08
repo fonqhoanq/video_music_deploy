@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   post "/singer/signup", to:"singers#create"
   get "videos/public", to:"videos#show_public_videos"
   post "videos/:id/thumbnails", to:"videos#update_thumbnails"
+  put "videos/:id/views", to:"videos#update_views"
   resources :videos
+
+  post "feelings/check", to:"feelings#check_feelings"
+  resources :feelings
+
+  post "subscribes/check", to:"subscribes#check_subscribes"
+  resources :subscribes
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

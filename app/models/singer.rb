@@ -1,5 +1,6 @@
 class Singer < ApplicationRecord
   has_many :videos
+  has_many :subscribes
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   before_save :downcase_email
 

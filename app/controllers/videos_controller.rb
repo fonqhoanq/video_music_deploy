@@ -1,13 +1,13 @@
 class VideosController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_video, only: [:show, :update, :update_thumbnails, :destroy]
+  before_action :set_video, only: [:show, :update, :update_thumbnails, :destroy, :update_views]
 
   def index
     @videos = Video.all
   end
 
   def show
-    render json: @video
+    @video
   end
 
   def create
@@ -43,6 +43,14 @@ class VideosController < ApplicationController
     else
       render json: @video.errors, status: :unprocessable_entity
     end  
+  end
+
+  def update_views
+    if @video.increment!(:views)
+      render json: @video
+    else
+      render json: @video.errors, status: :unprocessable_entity
+    end
   end
 
   private
