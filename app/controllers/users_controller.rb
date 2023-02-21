@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :update_avatar]
   skip_before_action :verify_authenticity_token
 
   # GET /users
@@ -37,6 +37,14 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+  def update_avatar
+    if @user.update(avatar_params)
+      render json: {avatarUrl: url_for(@user.avatar)}
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end  
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -46,5 +54,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:email, :age, :name, :password, :password_confirmation)
+    end
+
+    def avatar_params
+      params.permit(:avatar)
     end
 end

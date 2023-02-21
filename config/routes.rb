@@ -5,7 +5,8 @@ Rails.application.routes.draw do
                registrations: 'users/registrations'
              }
   get '/member-data', to: 'members#show'
-  # resources :users, except: [:new]
+  put "users/:id/avatar", to:"users#update_avatar"
+  resources :users, except: [:new]
   # post "/signup", to: "users#create"
   resources :singers
   post "/singer/signup", to:"singers#create"
@@ -19,5 +20,8 @@ Rails.application.routes.draw do
 
   post "subscribes/check", to:"subscribes#check_subscribes"
   resources :subscribes
+
+  get "comments/videos", to:"comments#show_comments"
+  resources :comments
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
