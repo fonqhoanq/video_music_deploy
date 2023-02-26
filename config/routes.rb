@@ -23,5 +23,7 @@ Rails.application.routes.draw do
 
   get "comments/videos", to:"comments#show_comments"
   resources :comments
+
+  resources :histories
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

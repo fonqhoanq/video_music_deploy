@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_12_031740) do
+ActiveRecord::Schema.define(version: 2023_02_21_151027) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 2023_02_12_031740) do
     t.bigint "video_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "search_text"
+    t.integer "history_type"
     t.index ["user_id"], name: "index_histories_on_user_id"
     t.index ["video_id"], name: "index_histories_on_video_id"
   end
