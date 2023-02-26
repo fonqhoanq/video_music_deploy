@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   put "videos/:id/views", to:"videos#update_views"
   resources :videos
 
+  get "feelings/like_videos", to:"feelings#get_liked_videos"
   post "feelings/check", to:"feelings#check_feelings"
   resources :feelings
 

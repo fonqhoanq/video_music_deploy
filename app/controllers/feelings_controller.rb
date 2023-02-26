@@ -41,6 +41,13 @@ class FeelingsController < ApplicationController
       render json: @check_feelings
     end
 
+    # GET /feelings/like_videos
+    def get_liked_videos 
+      @liked_feelings = Feeling.where(user_id: params[:user_id], status: :like)
+                               .paginate(page: params[:page], per_page: 12)
+                               .order("created_at DESC")
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_feeling
