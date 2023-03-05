@@ -5,6 +5,7 @@ json.array! @videos do |video|
     json.singer do
         json.id video.singer.id
         json.channelName video.singer.channel_name
+        json.avatarUrl url_for(video.singer.avatar) if video.singer.avatar.attached?
     end
     json.createdAt video.created_at
     json.public video.public

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :singers,
+  controllers: {
+    sessions: 'singers/sessions',
+    registrations: 'singers/registrations'
+  }
   devise_for :users,
              controllers: {
                sessions: 'users/sessions',
@@ -8,6 +13,7 @@ Rails.application.routes.draw do
   put "users/:id/avatar", to:"users#update_avatar"
   resources :users, except: [:new]
   # post "/signup", to: "users#create"
+  put "singers/:id/avatar", to:"singers#update_avatar"
   resources :singers
   post "/singer/signup", to:"singers#create"
   get "videos/public", to:"videos#show_public_videos"

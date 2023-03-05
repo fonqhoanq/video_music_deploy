@@ -1,6 +1,6 @@
 class SingersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_singer, only: [:show, :update, :destroy]
+  before_action :set_singer, only: [:show, :update, :destroy, :update_avatar]
   
     # GET /singers
     def index
@@ -37,6 +37,14 @@ class SingersController < ApplicationController
       @singer.destroy
     end
   
+    def update_avatar
+      if @singer.update(avatar_params)
+        render json: {avatarUrl: url_for(@singer.avatar)}
+      else
+        render json: @singer.errors, status: :unprocessable_entity
+      end  
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_singer
@@ -46,6 +54,10 @@ class SingersController < ApplicationController
       # Only allow a list of trusted parameters through.
       def singer_params
         params.require(:singer).permit(:email, :age, :name, :channel_name, :password, :password_confirmation)
+      end
+      
+      def avatar_params
+        params.permit(:avatar)
       end
   end
   

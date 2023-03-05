@@ -1,19 +1,12 @@
 class Singer < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :jwt_authenticatable,
+         jwt_revocation_strategy: JwtDenylist
   has_many :videos
   has_many :subscribes
   has_many :replies
+  has_one_attached :avatar
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  before_save :downcase_email
-
-  validates :name, presence: true
-  validates :channel_name, presence: true
-  validates :age, presence: true, numericality: { greater_than: 0}
-  validates :email, presence: true, length: {minimum:10, maximum:255}, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false}
-
-  has_secure_password
-  private
-  def downcase_email
-    self.email.downcase!
-  end
 end
