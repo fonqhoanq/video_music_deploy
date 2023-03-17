@@ -3,8 +3,11 @@ class SearchsController < ApplicationController
  
     # GET /searchs
     def index
-      @search_results = Video.ransack(title_cont: params[:text])
-      @videos = @search_results.result.paginate(page: params[:page], per_page: 5).order("created_at DESC")
+      @search_singer_results = Singer.ransack(channel_name_cont: params[:text])
+      @singers = @search_singer_results.result.paginate(page: params[:page], per_page: 5).order("created_at DESC")
+
+      @search_video_results = Video.ransack(title_cont: params[:text])
+      @videos = @search_video_results.result.paginate(page: params[:page], per_page: 5).order("created_at DESC")
     end
   
     private

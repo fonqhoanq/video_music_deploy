@@ -4,7 +4,7 @@ class HistoriesController < ApplicationController
   
     # GET /histories
     def index
-      @histories = History.where(history_type: params[:history_type], user_id: params[:user_id]).paginate(page: params[:page], per_page: 12).order("created_at DESC")
+      @histories = History.where(user_id: params[:user_id], history_type: params[:history_type]).paginate(page: params[:page], per_page: 12).order("created_at DESC").distinct
     end
   
     # GET /histories/1
