@@ -9,7 +9,7 @@ class SingersController < ApplicationController
   
     # GET /singers/1
     def show
-      render json: @singer
+      @singer
     end
   
     # POST /singers

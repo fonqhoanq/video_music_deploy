@@ -41,6 +41,10 @@ class SubscribesController < ApplicationController
       render json: @check_subscribes
     end
     
+    def show_subscribes_channels
+      @subscribes_channels = Subscribe.where(user_id: params[:user_id], status: :subscribe).order("updated_at DESC")
+    end
+  
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_subscribe
