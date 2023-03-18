@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   put "singers/:id/avatar", to:"singers#update_avatar"
   resources :singers
   post "/singer/signup", to:"singers#create"
+  get "videos/singer/public", to:"videos#show_singer_public_videos"
   get "videos/public", to:"videos#show_public_videos"
   post "videos/:id/thumbnails", to:"videos#update_thumbnails"
   put "videos/:id/views", to:"videos#update_views"
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   resources :feelings
 
   post "subscribes/check", to:"subscribes#check_subscribes"
+  get "subscribes/channels", to:"subscribes#show_subscribes_channels"
   resources :subscribes
 
   get "comments/videos", to:"comments#show_comments"

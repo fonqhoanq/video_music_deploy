@@ -36,6 +36,10 @@ class VideosController < ApplicationController
   def show_public_videos
     @videos = Video.where(public: true).paginate(page: params[:page], per_page: 12).order("created_at DESC")
   end
+  
+  def show_singer_public_videos
+    @singer_videos = Video.where(public: true, singer_id: params[:singer_id]).order("created_at DESC")
+  end
 
   def update_thumbnails
     if @video.update(thumbnails_params)
