@@ -13,9 +13,12 @@ Rails.application.routes.draw do
   put "users/:id/avatar", to:"users#update_avatar"
   resources :users, except: [:new]
   # post "/signup", to: "users#create"
+  
   put "singers/:id/avatar", to:"singers#update_avatar"
   resources :singers
   post "/singer/signup", to:"singers#create"
+
+  get "videos/trending", to:"videos#show_trending_videos"
   get "videos/singer/public", to:"videos#show_singer_public_videos"
   get "videos/public", to:"videos#show_public_videos"
   post "videos/:id/thumbnails", to:"videos#update_thumbnails"
@@ -28,6 +31,7 @@ Rails.application.routes.draw do
 
   post "subscribes/check", to:"subscribes#check_subscribes"
   get "subscribes/channels", to:"subscribes#show_subscribes_channels"
+  get "subscribes/videos", to:"subscribes#show_subscribes_videos"
   resources :subscribes
 
   get "comments/videos", to:"comments#show_comments"
