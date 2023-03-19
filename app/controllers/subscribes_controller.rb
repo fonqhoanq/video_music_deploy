@@ -44,7 +44,16 @@ class SubscribesController < ApplicationController
     def show_subscribes_channels
       @subscribes_channels = Subscribe.where(user_id: params[:user_id], status: :subscribe).order("updated_at DESC")
     end
-  
+
+    def show_subscribes_videos
+      @subscribes_videos = Video.joins("INNER JOIN singers ON singers.id = videos.singer_id")
+                                .joins("INNER JOIN subscribes ON subscribes.singer_id = singers.id")
+                                .where("subscribes.user_id = #{params[:user_id]}")
+                                .where("subscribes.status = 1")
+                                .paginate(page: params[:page], per_page: params[:limit])
+                                .order(updated_at: :desc)
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_subscribe
