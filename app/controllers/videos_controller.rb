@@ -33,6 +33,10 @@ class VideosController < ApplicationController
     @video.destroy
   end
 
+  def show_singer_videos
+    @singer_videos = Video.where(singer_id: params[:singer_id]).order("created_at DESC")
+  end
+
   def show_public_videos
     @public_videos = Video.where(public: true).paginate(page: params[:page], per_page: 12).order("created_at DESC")
   end
