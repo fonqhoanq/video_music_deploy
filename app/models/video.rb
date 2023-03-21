@@ -3,7 +3,18 @@ class Video < ApplicationRecord
   has_one_attached :url
   has_one_attached :thumbnails
   has_many :feeling
-  enum category_id: {pop: 0, rock: 1}
+  enum category_id: {
+    pop: 0,
+    rock: 1, 
+    country_music: 3, 
+    electronic: 4, 
+    funk: 5, 
+    hip_hop: 6, 
+    jazz: 7, 
+    latin: 8, 
+    soul: 9, 
+    r_b: 10
+  }
   def self.ransackable_attributes(auth_object = nil)
     ["category_id", "created_at", "description", "id", "public", "singer_id", "title", "updated_at", "views"]
   end

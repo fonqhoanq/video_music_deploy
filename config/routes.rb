@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :singers
   post "/singer/signup", to:"singers#create"
 
+  get "videos/singer", to:"videos#show_singer_videos"
   get "videos/trending", to:"videos#show_trending_videos"
   get "videos/singer/public", to:"videos#show_singer_public_videos"
   get "videos/public", to:"videos#show_public_videos"

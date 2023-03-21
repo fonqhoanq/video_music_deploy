@@ -12,4 +12,12 @@ json.array! videos do |video|
   json.views video.views
   json.url url_for(video.url) if video.url.attached?
   json.thumbnails url_for(video.thumbnails) if video.thumbnails.attached?
+  json.likes video.feeling.where(:status => 'like').count
+  json.dislikes video.feeling.where(:status => 'dislike').count
+  if video.public 
+    json.status 'Public'
+  else
+    json.status 'Private'
+  end
+  # json.comments video.comment.count
 end
