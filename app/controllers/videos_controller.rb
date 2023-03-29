@@ -51,7 +51,7 @@ class VideosController < ApplicationController
 
   def update_thumbnails
     if @video.update(thumbnails_params)
-      render json: @video
+      render json: {thumbnails: url_for(@video.thumbnails)}
     else
       render json: @video.errors, status: :unprocessable_entity
     end  
