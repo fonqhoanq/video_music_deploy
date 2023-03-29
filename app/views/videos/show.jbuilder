@@ -13,4 +13,4 @@ json.url url_for(@video.url) if @video.url.attached?
 json.thumbnails url_for(@video.thumbnails) if @video.thumbnails.attached?
 json.likes @video.feeling.where(:status => 'like').count
 json.dislikes @video.feeling.where(:status => 'dislike').count
-
+json.category_title @video.category.title
