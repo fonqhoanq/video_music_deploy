@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   post "subscribes/check", to:"subscribes#check_subscribes"
   get "subscribes/channels", to:"subscribes#show_subscribes_channels"
   get "subscribes/videos", to:"subscribes#show_subscribes_videos"
+  get "subscribes/subscribers", to:"subscribes#show_subscribers"
   resources :subscribes
 
   get "comments/videos", to:"comments#show_comments"
