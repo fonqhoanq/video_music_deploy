@@ -54,6 +54,10 @@ class SubscribesController < ApplicationController
                                 .order(updated_at: :desc)
     end
 
+    def show_subscribers
+      @subscribers = Subscribe.where(singer_id: params[:singer_id], status: :subscribe)
+    end
+  
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_subscribe
