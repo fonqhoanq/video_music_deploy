@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get "videos/public", to:"videos#show_public_videos"
   post "videos/:id/thumbnails", to:"videos#update_thumbnails"
   put "videos/:id/views", to:"videos#update_views"
+  get "videos/category", to:"videos#show_videos_by_category"
   resources :videos
 
   get "feelings/like_videos", to:"feelings#get_liked_videos"
@@ -44,5 +45,6 @@ Rails.application.routes.draw do
   get "search", to:"searchs#index"
 
   resources :categories, only: [:index]
+  resources :member_notifications, only: [:index]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
