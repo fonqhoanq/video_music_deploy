@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get "search", to:"searchs#index"
 
   resources :categories, only: [:index]
-  resources :member_notifications, only: [:index]
+
+  get "member_notifications/notifications", to:"member_notifications#show_recent_videos_notifications"
+  resources :member_notifications, only: [:index, :update]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

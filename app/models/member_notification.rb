@@ -1,5 +1,6 @@
 class MemberNotification < ApplicationRecord
   belongs_to :user
+  belongs_to :video
   enum noti_status: {
     pending: 0,
     sent: 1,

@@ -89,6 +89,7 @@ class VideosController < ApplicationController
     singer = @video.singer
     target_members = User.joins("INNER JOIN subscribes ON subscribes.user_id = users.id")
                          .where("subscribes.singer_id = #{singer.id}")
+                         .where("subscribes.status = 1")
   end
 
   def handle_send_notification(video)
@@ -110,7 +111,7 @@ class VideosController < ApplicationController
   
     # Only allow a list of trusted parameters through.
     def video_params
-      params.permit(:url, :singer_id)
+      params.permit(:url, :singer_id, :category_id)
     end
 
     def update_params 
