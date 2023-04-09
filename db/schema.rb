@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_04_092135) do
+ActiveRecord::Schema.define(version: 2023_04_07_154719) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -67,6 +67,12 @@ ActiveRecord::Schema.define(version: 2023_04_04_092135) do
     t.index ["video_id"], name: "index_feelings_on_video_id"
   end
 
+  create_table "hash_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "watch_at"
     t.integer "length"
@@ -99,6 +105,24 @@ ActiveRecord::Schema.define(version: 2023_04_04_092135) do
     t.bigint "video_id"
     t.index ["user_id"], name: "index_member_notifications_on_user_id"
     t.index ["video_id"], name: "index_member_notifications_on_video_id"
+  end
+
+  create_table "playlist_videos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "video_id", null: false
+    t.bigint "playlist_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["playlist_id"], name: "index_playlist_videos_on_playlist_id"
+    t.index ["video_id"], name: "index_playlist_videos_on_video_id"
+  end
+
+  create_table "playlists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "hash_tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hash_tag_id"], name: "index_playlists_on_hash_tag_id"
   end
 
   create_table "replies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -142,6 +166,15 @@ ActiveRecord::Schema.define(version: 2023_04_04_092135) do
     t.index ["user_id"], name: "index_subscribes_on_user_id"
   end
 
+  create_table "user_playlists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "playlist_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["playlist_id"], name: "index_user_playlists_on_playlist_id"
+    t.index ["user_id"], name: "index_user_playlists_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email"
     t.integer "age"
@@ -167,6 +200,8 @@ ActiveRecord::Schema.define(version: 2023_04_04_092135) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "public", default: false
+    t.bigint "hash_tag_id"
+    t.index ["hash_tag_id"], name: "index_videos_on_hash_tag_id"
     t.index ["singer_id"], name: "index_videos_on_singer_id"
   end
 
@@ -180,10 +215,16 @@ ActiveRecord::Schema.define(version: 2023_04_04_092135) do
   add_foreign_key "histories", "videos"
   add_foreign_key "member_notifications", "users"
   add_foreign_key "member_notifications", "videos"
+  add_foreign_key "playlist_videos", "playlists"
+  add_foreign_key "playlist_videos", "videos"
+  add_foreign_key "playlists", "hash_tags"
   add_foreign_key "replies", "comments"
   add_foreign_key "replies", "singers"
   add_foreign_key "replies", "users"
   add_foreign_key "subscribes", "singers"
   add_foreign_key "subscribes", "users"
+  add_foreign_key "user_playlists", "playlists"
+  add_foreign_key "user_playlists", "users"
+  add_foreign_key "videos", "hash_tags"
   add_foreign_key "videos", "singers"
 end

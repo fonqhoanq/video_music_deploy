@@ -2,9 +2,9 @@ json.id @video.id
 json.title @video.title
 json.description @video.description
 json.singer do
-    json.id @video.singer.id
-    json.channelName @video.singer.channel_name
-    json.avatarUrl url_for(@video.singer.avatar) if @video.singer.avatar.attached?
+  json.id @video.singer.id
+  json.channelName @video.singer.channel_name
+  json.avatarUrl url_for(@video.singer.avatar) if @video.singer.avatar.attached?
 end
 json.createdAt @video.created_at
 json.public @video.public
