@@ -5,6 +5,7 @@ class Video < ApplicationRecord
   has_one_attached :thumbnails
   has_many :feeling
   has_many :member_notifications
+  has_many :playlist_videos
   def self.ransackable_attributes(auth_object = nil)
     ["category_id", "created_at", "description", "id", "public", "singer_id", "title", "updated_at", "views"]
   end

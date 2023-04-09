@@ -15,7 +15,14 @@ class HistoriesController < ApplicationController
     # POST /histories
     def create
       @history = History.new(history_params)
-  
+
+      # Handle create history playlist
+      user = User.find_by(id: params[:user_id])
+      playlist = Playlist.find_by(title: "History playlist for #{user.name}")
+      if playlist.blank?
+        PlaylistService.new(user).create_history_playlist
+      end
+
       if @history.save
         render json: @history, status: :created, location: @history
       else

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :feelings
   has_many :replies
   has_many :member_notifications
+  has_many :user_playlists
   has_one_attached :avatar
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable,

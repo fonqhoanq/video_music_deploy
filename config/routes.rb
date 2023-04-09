@@ -48,5 +48,7 @@ Rails.application.routes.draw do
 
   get "member_notifications/notifications", to:"member_notifications#show_recent_videos_notifications"
   resources :member_notifications, only: [:index, :update]
+  get "playlist_videos/playlist_for_user", to:"playlist_videos#show_playlist_for_user"
+  resources :playlist_videos
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
