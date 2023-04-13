@@ -60,6 +60,13 @@ class VideosController < ApplicationController
                             .paginate(page: params[:page], per_page: 12)
   end
 
+  def show_watched_videos
+    @watched_videos = Video.joins("INNER JOIN histories ON videos.id = histories.video_id")
+                          .where("histories.user_id = #{params[:user_id]}")
+                          .paginate(page: params[:page], per_page: 12)
+                          .order("histories.created_at DESC")
+  end
+
   def update_thumbnails
     if @video.update(thumbnails_params)
       render json: {thumbnails: url_for(@video.thumbnails)}

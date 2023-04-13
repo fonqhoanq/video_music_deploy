@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post "videos/:id/thumbnails", to:"videos#update_thumbnails"
   put "videos/:id/views", to:"videos#update_views"
   get "videos/category", to:"videos#show_videos_by_category"
+  get "videos/watched", to:"videos#show_watched_videos"
   resources :videos
 
   get "feelings/like_videos", to:"feelings#get_liked_videos"
@@ -50,5 +51,7 @@ Rails.application.routes.draw do
   resources :member_notifications, only: [:index, :update]
   get "playlist_videos/playlist_for_user", to:"playlist_videos#show_playlist_for_user"
   resources :playlist_videos
+
+  resources :replies
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
