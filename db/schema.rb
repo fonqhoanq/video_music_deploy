@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_07_154719) do
+ActiveRecord::Schema.define(version: 2023_04_13_124838) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -127,11 +127,11 @@ ActiveRecord::Schema.define(version: 2023_04_07_154719) do
 
   create_table "replies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "text"
-    t.bigint "singer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
     t.bigint "comment_id", null: false
+    t.bigint "user_id"
+    t.bigint "singer_id"
     t.index ["comment_id"], name: "index_replies_on_comment_id"
     t.index ["singer_id"], name: "index_replies_on_singer_id"
     t.index ["user_id"], name: "index_replies_on_user_id"

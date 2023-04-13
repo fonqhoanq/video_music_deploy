@@ -1,5 +1,5 @@
 class Reply < ApplicationRecord
-  belongs_to :singer
-  belongs_to :video
+  # belongs_to :singer
   belongs_to :comment
+  belongs_to :user
 end
