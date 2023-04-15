@@ -4,8 +4,8 @@ class Singer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist
-  has_many :videos
-  has_many :subscribes
+  has_many :videos, dependent: :destroy
+  has_many :subscribes, dependent: :destroy
   # has_many :replies
   has_one_attached :avatar
   def self.ransackable_attributes(auth_object = nil)

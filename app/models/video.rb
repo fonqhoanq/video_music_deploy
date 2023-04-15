@@ -1,12 +1,14 @@
 class Video < ApplicationRecord
   belongs_to :singer
   belongs_to :category
+  has_many :video_hash_tags, dependent: :destroy
   has_one_attached :url
   has_one_attached :thumbnails
-  has_many :feeling
-  has_many :member_notifications
-  has_many :playlist_videos
-  has_many :comments
+  has_many :feeling, dependent: :destroy
+  has_many :member_notifications, dependent: :destroy
+  has_many :playlist_videos, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :histories, dependent: :destroy
   def self.ransackable_attributes(auth_object = nil)
     ["category_id", "created_at", "description", "id", "public", "singer_id", "title", "updated_at", "views"]
   end

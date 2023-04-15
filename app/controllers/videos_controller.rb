@@ -22,13 +22,14 @@ class VideosController < ApplicationController
   end
 
   def update
-    if @video.title.blank?
-      ActiveRecord::Base.transaction do
-        @video.update!(update_params)
-        handle_send_notification(@video)
-      end
-    else
+    return unless params[:video][:hash_tags].present?
+    ActiveRecord::Base.transaction do
+      handle_send_notification(@video, params[:video][:title]) if @video.title.blank?
       @video.update!(update_params)
+      VideoHashTag.where(video_id: @video.id).destroy_all
+      params[:video][:hash_tags].each do |hash_tag|
+        VideoHashTag.create!(video_id: @video.id, hash_tag_id: hash_tag)
+      end
     end
     render json: @video, except: :url
     end
@@ -99,10 +100,10 @@ class VideosController < ApplicationController
                          .where("subscribes.status = 1")
   end
 
-  def handle_send_notification(video)
+  def handle_send_notification(video, title)
     target_members_to_sent_notification.each do |member|
       MemberNotification.create!(video_id: video.id,
-                                 content: "Recent upload video: #{video.title}",
+                                 content: "Recent upload video: #{title}",
                                  user_id: member.id,
                                  noti_status: :sent,
                                  noti_type: :recent_upload_video_notification

@@ -15,3 +15,6 @@ json.likes @video.feeling.where(:status => 'like').count
 json.dislikes @video.feeling.where(:status => 'dislike').count
 json.category_title @video.category.title
 json.comments @video.comments.count
+json.hashTags @video.video_hash_tags do |hash_tag|
+  json.title hash_tag.hash_tag.title
+end

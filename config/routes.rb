@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:index]
 
+  resources :hash_tags, only: [:index]
+
   get "member_notifications/notifications", to:"member_notifications#show_recent_videos_notifications"
   resources :member_notifications, only: [:index, :update]
   get "playlist_videos/playlist_for_user", to:"playlist_videos#show_playlist_for_user"
