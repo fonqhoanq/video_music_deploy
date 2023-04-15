@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_13_124838) do
+ActiveRecord::Schema.define(version: 2023_04_15_041839) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -191,6 +191,15 @@ ActiveRecord::Schema.define(version: 2023_04_13_124838) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "video_hash_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "video_id", null: false
+    t.bigint "hash_tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hash_tag_id"], name: "index_video_hash_tags_on_hash_tag_id"
+    t.index ["video_id"], name: "index_video_hash_tags_on_video_id"
+  end
+
   create_table "videos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -200,8 +209,6 @@ ActiveRecord::Schema.define(version: 2023_04_13_124838) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "public", default: false
-    t.bigint "hash_tag_id"
-    t.index ["hash_tag_id"], name: "index_videos_on_hash_tag_id"
     t.index ["singer_id"], name: "index_videos_on_singer_id"
   end
 
@@ -225,6 +232,7 @@ ActiveRecord::Schema.define(version: 2023_04_13_124838) do
   add_foreign_key "subscribes", "users"
   add_foreign_key "user_playlists", "playlists"
   add_foreign_key "user_playlists", "users"
-  add_foreign_key "videos", "hash_tags"
+  add_foreign_key "video_hash_tags", "hash_tags"
+  add_foreign_key "video_hash_tags", "videos"
   add_foreign_key "videos", "singers"
 end
