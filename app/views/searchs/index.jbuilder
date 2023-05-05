@@ -16,7 +16,7 @@ videos_json = json.array! @videos do |video|
       json.channelName video.singer.channel_name
   end
   json.createdAt video.created_at
-  json.public video.public
+  json.public video.video_status == 'is_public'
   json.views video.views
   json.url url_for(video.url) if video.url.attached?
   json.thumbnails url_for(video.thumbnails) if video.thumbnails.attached?
