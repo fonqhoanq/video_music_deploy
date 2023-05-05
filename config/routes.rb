@@ -10,6 +10,8 @@ Rails.application.routes.draw do
                registrations: 'users/registrations'
              }
   get '/member-data', to: 'members#show'
+  require "sidekiq/web"
+    mount Sidekiq::Web => "/sidekiq"
   put "users/:id/avatar", to:"users#update_avatar"
   resources :users, except: [:new]
   # post "/signup", to: "users#create"

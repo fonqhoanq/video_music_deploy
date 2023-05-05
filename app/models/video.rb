@@ -9,6 +9,16 @@ class Video < ApplicationRecord
   has_many :playlist_videos, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :histories, dependent: :destroy
+  enum video_status: {
+    unpublic: 0,
+    is_public: 1,
+    scheduling: 2
+  }
+
+  def upload_video_at
+    uploaded_video_at || VideoService.new(self).scheduled_at
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     ["category_id", "created_at", "description", "id", "public", "singer_id", "title", "updated_at", "views"]
   end

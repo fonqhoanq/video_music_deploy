@@ -7,7 +7,7 @@ json.singer do
   json.avatarUrl url_for(@video.singer.avatar) if @video.singer.avatar.attached?
 end
 json.createdAt @video.created_at
-json.public @video.public
+json.public @video.video_status == 'is_public'
 json.views @video.views
 json.url url_for(@video.url) if @video.url.attached?
 json.thumbnails url_for(@video.thumbnails) if @video.thumbnails.attached?
@@ -18,3 +18,5 @@ json.comments @video.comments.count
 json.hashTags @video.video_hash_tags do |hash_tag|
   json.title hash_tag.hash_tag.title
 end
+json.upload_video_at @video.upload_video_at
+json.status @video.video_status

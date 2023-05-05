@@ -7,18 +7,15 @@ json.array! videos do |video|
     json.channelName video.singer.channel_name
     json.avatarUrl url_for(video.singer.avatar) if video.singer.avatar.attached?
   end
-  json.createdAt video.created_at
-  json.public video.public
+  json.createdAt video.updated_at
+  json.public video.video_status == 'is_public'
   json.views video.views
   json.url url_for(video.url) if video.url.attached?
   json.thumbnails url_for(video.thumbnails) if video.thumbnails.attached?
   json.likes video.feeling.where(:status => 'like').count
   json.dislikes video.feeling.where(:status => 'dislike').count
   json.comments video.comments.count
-  if video.public 
-    json.status 'Public'
-  else
-    json.status 'Private'
-  end
+  json.status video.video_status
+  json.upload_video_at video.upload_video_at
   # json.comments video.comment.count
 end
