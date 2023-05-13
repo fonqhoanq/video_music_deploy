@@ -57,5 +57,7 @@ Rails.application.routes.draw do
   resources :playlist_videos
 
   resources :replies
+  post "watch_later_videos/check_watch_later", to:"watch_later_videos#check_watch_later"
+  resources :watch_later_videos
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
