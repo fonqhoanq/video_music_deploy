@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :singers
   post "/singer/signup", to:"singers#create"
 
+  get "videos/recommend_for_playlist", to:"videos#show_recommend_for_playlist"
   get "videos/singer", to:"videos#show_singer_videos"
   get "videos/trending", to:"videos#show_trending_videos"
   get "videos/singer/public", to:"videos#show_singer_public_videos"
@@ -59,5 +60,11 @@ Rails.application.routes.draw do
   resources :replies
   post "watch_later_videos/check_watch_later", to:"watch_later_videos#check_watch_later"
   resources :watch_later_videos
+
+  get "own_playlists/check_video", to:"own_playlists#check_video"
+  post "own_playlist_videos/add_video", to:"own_playlist_videos#create"
+  post "own_playlist_videos/remove_video", to:"own_playlist_videos#remove_video"
+  resources :own_playlists
+  resources :own_playlist_videos
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
