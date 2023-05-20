@@ -9,6 +9,7 @@ class Video < ApplicationRecord
   has_many :playlist_videos, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :histories, dependent: :destroy
+  has_many :own_playlist_videos, dependent: :destroy
   enum video_status: {
     unpublic: 0,
     is_public: 1,

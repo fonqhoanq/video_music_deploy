@@ -73,6 +73,16 @@ class VideosController < ApplicationController
                           .order("histories.updated_at DESC")
   end
 
+  def show_recommend_for_playlist
+    @playlist_video_ids = Video.joins("INNER JOIN own_playlist_videos ON videos.id = own_playlist_videos.video_id")
+                            .joins("INNER JOIN own_playlists ON own_playlists.id = own_playlist_videos.own_playlist_id")
+                            .where("own_playlists.user_id = #{params[:user_id]}")
+                            .where("own_playlists.id = #{params[:playlist_id]}")
+                            .map(&:id)
+    @recommend_for_playlist_videos = Video.where.not(id: @playlist_video_ids)
+                                          .limit(5)
+  end
+
   def update_thumbnails
     if @video.update(thumbnails_params)
       render json: {thumbnails: url_for(@video.thumbnails)}

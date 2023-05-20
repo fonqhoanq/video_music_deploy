@@ -31,11 +31,7 @@ class WatchLaterVideosController < ApplicationController
 
   def check_watch_later
     @watch_later_video = WatchLaterVideo.where(user_id: params[:user_id], video_id: params[:video_id])
-    if @watch_later_video.blank?
-      render json: {status: 'Not found', message: 'Video is not in watch later list'}, status: :not_found
-    else
-      render json: @watch_later_video
-    end
+    render json: @watch_later_video
   end
 
   private
