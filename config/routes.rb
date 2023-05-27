@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :singers
   post "/singer/signup", to:"singers#create"
 
+  get "videos/recommend_after_watching", to:"videos#show_recommend_after_watching"
   get "videos/recommend_for_playlist", to:"videos#show_recommend_for_playlist"
   get "videos/singer", to:"videos#show_singer_videos"
   get "videos/trending", to:"videos#show_trending_videos"

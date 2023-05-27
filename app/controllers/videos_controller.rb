@@ -1,6 +1,6 @@
 class VideosController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_video, only: [:show, :update, :update_thumbnails, :destroy, :update_views]
+  before_action :set_video, only: [:show, :update, :update_thumbnails, :destroy, :update_views, :show_recommend_after_watching]
 
   def index
     @videos = Video.all
@@ -45,24 +45,28 @@ class VideosController < ApplicationController
 
   def show_singer_videos
     @singer_videos = Video.where(singer_id: params[:singer_id])
-                          .order("updated_at DESC")
+                          .order("created_at DESC")
   end
 
   def show_public_videos
     @public_videos = Video.where(video_status: :is_public)
                           .paginate(page: params[:page], per_page: 12)
-                          .order("updated_at DESC")
+                          .order("created_at DESC")
   end
   
   def show_singer_public_videos
     @singer_videos = Video.where(video_status: :is_public, singer_id: params[:singer_id])
                           .paginate(page: params[:page], per_page: 12)
-                          .order("updated_at DESC")
+                          .order("created_at DESC")
   end
 
   def show_trending_videos
+    videos = Video.all
+    if should_execute_calculate_trending_score?(videos.first)
+      CalculateTrendingScoreService.new(videos).execute
+    end
     @trending_videos = Video.where(video_status: :is_public)
-                            .order(views: :desc)
+                            .order(trending_score: :desc)
                             .paginate(page: params[:page], per_page: 12)
   end
 
@@ -83,6 +87,34 @@ class VideosController < ApplicationController
                                           .limit(5)
   end
 
+  def show_recommend_after_watching
+    @recent_upload_video_ids = Video.joins("INNER JOIN histories ON videos.id = histories.video_id")
+                                   .where("histories.user_id = #{params[:user_id]}")
+                                   .where("videos.singer_id = #{params[:singer_id]}")
+                                   .where("videos.video_status = 1")
+                                   .order("videos.created_at DESC")
+                                   .limit(10)
+                                   .map(&:id)
+    @top_views_video_ids = Video.where(singer_id: params[:singer_id], video_status: :is_public)
+                                .order(views: :desc)
+                                .limit(10)
+                                .map(&:id)
+    @watched_video_ids = Video.joins("INNER JOIN histories ON videos.id = histories.video_id")
+                              .where("histories.user_id = #{params[:user_id]}")
+                              .where("videos.video_status = 1")
+                              .order("histories.created_at DESC")
+                              .limit(10)
+                              .map(&:id)
+    @same_category_video_ids = Video.where(category_id: @video.category_id, video_status: :is_public)
+                                    .limit(10)
+                                    .map(&:id)
+    video_ids = @recent_upload_video_ids.union(@top_views_video_ids).union(@watched_video_ids).union(@same_category_video_ids)
+
+    @recommend_after_watching_videos = Video.where(id: video_ids)
+                                            .where.not(id: @video.id)    
+                                            .paginate(page: params[:page], per_page: 12)
+  end
+
   def update_thumbnails
     if @video.update(thumbnails_params)
       render json: {thumbnails: url_for(@video.thumbnails)}
@@ -92,6 +124,20 @@ class VideosController < ApplicationController
   end
 
   def update_views
+    duration = params[:duration].to_f
+    current_time = params[:current_time].to_f
+    if duration < 60.0 && current_time != duration
+      render json: {message: "Cant update views for this video"}
+      return
+    end
+    if (60..240).include?(duration) && current_time / duration < 0.7
+      render json: {message: "Cant update views for this video"}
+      return
+    end
+    if duration > 240 && current_time / duration < 0.5
+      render json: {message: "Cant update views for this video"}
+      return
+    end
     if @video.increment!(:views)
       render json: @video
     else
@@ -104,7 +150,7 @@ class VideosController < ApplicationController
                    .where("categories.title = '#{params[:category]}'")
                    .where("videos.video_status = 1")
                    .paginate(page: params[:page], per_page: 12)
-                   .order(updated_at: :desc)
+                   .order(created_at: :desc)
 
   end
 
@@ -149,5 +195,9 @@ class VideosController < ApplicationController
       reserve_service = VideoService.new(video)
       reserve_service.schedule(schedule_at)
       video.touch(:updated_at)
+    end
+
+    def should_execute_calculate_trending_score?(video)
+      video.update_trending_at.nil? || video.update_trending_at < 1.day.ago
     end
 end

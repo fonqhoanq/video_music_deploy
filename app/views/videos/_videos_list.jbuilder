@@ -7,7 +7,7 @@ json.array! videos do |video|
     json.channelName video.singer.channel_name
     json.avatarUrl url_for(video.singer.avatar) if video.singer.avatar.attached?
   end
-  json.createdAt video.updated_at
+  json.createdAt video.created_at
   json.public video.video_status == 'is_public'
   json.views video.views
   json.url url_for(video.url) if video.url.attached?
