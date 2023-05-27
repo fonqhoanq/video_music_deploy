@@ -15,10 +15,16 @@ class FeelingsController < ApplicationController
     # POST /feelings
     def create
       @feeling = Feeling.find_or_initialize_by(user_id: params[:user_id,], video_id: params[:video_id])
-      if @feeling.update(:status => params[:status])
-        render json: @feeling
-      else
-        render json: @feeling.errors, status: :unprocessable_entity
+      ActiveRecord::Base.transaction do
+        if @feeling.update(:status => params[:status])
+          @video = Video.find(params[:video_id])
+          likes = @video.feeling.where(status: :like).count
+          dislikes = @video.feeling.where(status: :dislike).count
+          @video.update!(likes: likes, dislikes: dislikes)
+          render json: @feeling
+        else
+          render json: @feeling.errors, status: :unprocessable_entity
+        end
       end
     end
   

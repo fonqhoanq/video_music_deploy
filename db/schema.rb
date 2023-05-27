@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_16_034723) do
+ActiveRecord::Schema.define(version: 2023_05_27_090740) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -229,6 +229,10 @@ ActiveRecord::Schema.define(version: 2023_05_16_034723) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "uploaded_video_at"
     t.integer "video_status"
+    t.float "trending_score"
+    t.integer "likes", default: 0
+    t.integer "dislikes", default: 0
+    t.datetime "update_trending_at"
     t.index ["singer_id"], name: "index_videos_on_singer_id"
   end
 
