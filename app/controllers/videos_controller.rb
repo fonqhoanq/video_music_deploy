@@ -138,10 +138,13 @@ class VideosController < ApplicationController
       render json: {message: "Cant update views for this video"}
       return
     end
-    if @video.increment!(:views)
-      render json: @video
-    else
-      render json: @video.errors, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      History.create!(user_id: params[:user_id], video_id: params[:id], history_type: :watch, current_time: current_time, duration: duration)
+      if @video.increment!(:views)
+        render json: @video
+      else
+        render json: @video.errors, status: :unprocessable_entity
+      end
     end
   end
 
