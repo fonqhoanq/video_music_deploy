@@ -15,7 +15,12 @@ Rails.application.routes.draw do
   put "users/:id/avatar", to:"users#update_avatar"
   resources :users, except: [:new]
   # post "/signup", to: "users#create"
-  
+  get "singers/age_chart", to:"singers#show_age_data"
+  get "singers/gender_chart", to:"singers#show_gender_data"
+  get "singers/feeling_chart", to:"singers#show_feelings_data"
+  get "singers/watched_hour_chart", to:"singers#show_watched_hour_data"
+  get "singers/view_month_chart", to:"singers#show_monthly_view_analytics"
+  get "singers/view_week_chart", to:"singers#show_weekly_view_analytics"
   put "singers/:id/avatar", to:"singers#update_avatar"
   resources :singers
   post "/singer/signup", to:"singers#create"

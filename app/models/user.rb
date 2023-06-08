@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_many :user_playlists
   has_many :own_playlists
   has_one_attached :avatar
+  enum gender: {
+    male: 0,
+    famale: 1,
+  }
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist

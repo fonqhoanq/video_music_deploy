@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_27_090740) do
+ActiveRecord::Schema.define(version: 2023_06_06_151148) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -74,14 +74,14 @@ ActiveRecord::Schema.define(version: 2023_05_27_090740) do
   end
 
   create_table "histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "watch_at"
-    t.integer "length"
     t.bigint "user_id", null: false
     t.bigint "video_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "search_text"
     t.integer "history_type"
+    t.float "duration", default: 0.0
+    t.float "current_time", default: 0.0
     t.index ["user_id"], name: "index_histories_on_user_id"
     t.index ["video_id"], name: "index_histories_on_video_id"
   end
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 2023_05_27_090740) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "gender"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
