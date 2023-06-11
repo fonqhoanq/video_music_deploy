@@ -12,6 +12,8 @@ class User < ApplicationRecord
     male: 0,
     famale: 1,
   }
+  validates :name, length: {minimum:3, maximum:40}
+  validates :age, numericality: { only_numeric: true }
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist

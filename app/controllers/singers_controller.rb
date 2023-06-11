@@ -87,7 +87,7 @@ class SingersController < ApplicationController
     end
 
     def show_feelings_data
-      feelings_data = Feeling.select("count(case when feelings.status='0' then 1 end) as like_count, count(case when feelings.status='1' then 1 end) as dislike_count")
+      feelings_data = Feeling.select("count(case when feelings.status='1' then 1 end) as like_count, count(case when feelings.status='0' then 1 end) as dislike_count")
                           .joins("INNER JOIN videos ON feelings.video_id = videos.id")
                           .where("videos.singer_id = ?", params[:id])
                           .where("feelings.video_id = videos.id")
