@@ -25,6 +25,9 @@ class VideosController < ApplicationController
     return unless params[:video][:hash_tags].present?
     ActiveRecord::Base.transaction do
       handle_send_notification(@video, params[:video][:title]) if @video.title.blank? && params[:video][:video_status] != 'scheduling'
+
+      handle_send_scheduling_video_notification(@video, params[:video][:title], params[:video][:singer_id]) if @video.title.blank? && params[:video][:video_status] == 'scheduling'
+
       @video.update!(update_params)
       VideoHashTag.where(video_id: @video.id).destroy_all
       params[:video][:hash_tags].each do |hash_tag|
@@ -173,6 +176,15 @@ class VideosController < ApplicationController
                                  noti_type: :recent_upload_video_notification
                                 )
     end
+  end
+
+  def handle_send_scheduling_video_notification(video, title, singer_id)
+    SingerNotification.create!(video_id: video.id,
+                                content: "Scheduling video: #{title}",
+                                singer_id: singer_id,
+                                noti_status: :sent,
+                                noti_type: :scheduling_video_notification
+                              )
   end
 
   private

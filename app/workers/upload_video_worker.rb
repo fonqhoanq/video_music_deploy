@@ -10,7 +10,8 @@ class UploadVideoWorker
     return unless video.uploaded_video_at.blank?
     ActiveRecord::Base.transaction do
       video.update!(uploaded_video_at: Time.current, video_status: :is_public)
-      handle_send_notification(video, video.title)
+      handle_send_notification(video)
+      handle_send_notification_for_singer(video)
     end
   end
 
@@ -37,14 +38,23 @@ class UploadVideoWorker
                          .where("subscribes.status = 1")
   end
 
-  def handle_send_notification(video, title)
+  def handle_send_notification(video)
     target_members_to_sent_notification(video).each do |member|
       MemberNotification.create!(video_id: video.id,
-                                 content: "Recent upload video: #{title}",
+                                 content: "Recent upload video: #{video.title}",
                                  user_id: member.id,
                                  noti_status: :sent,
                                  noti_type: :recent_upload_video_notification
                                 )
     end
+  end
+
+  def handle_send_notification_for_singer(video) 
+    SingerNotification.create!(video_id: video.id,
+                               content: "Video was scheduled successfully : #{video.title}",
+                               singer_id: video.singer.id,
+                               noti_status: :sent,
+                               noti_type: :scheduled_success_video_notification
+                              )
   end
 end

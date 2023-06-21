@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_06_151148) do
+ActiveRecord::Schema.define(version: 2023_06_11_143809) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -156,6 +156,19 @@ ActiveRecord::Schema.define(version: 2023_06_06_151148) do
     t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
+  create_table "singer_notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "content"
+    t.datetime "read_at"
+    t.integer "noti_status"
+    t.integer "noti_type"
+    t.bigint "singer_id", null: false
+    t.bigint "video_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["singer_id"], name: "index_singer_notifications_on_singer_id"
+    t.index ["video_id"], name: "index_singer_notifications_on_video_id"
+  end
+
   create_table "singers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.integer "age"
@@ -265,6 +278,8 @@ ActiveRecord::Schema.define(version: 2023_06_06_151148) do
   add_foreign_key "replies", "comments"
   add_foreign_key "replies", "singers"
   add_foreign_key "replies", "users"
+  add_foreign_key "singer_notifications", "singers"
+  add_foreign_key "singer_notifications", "videos"
   add_foreign_key "subscribes", "singers"
   add_foreign_key "subscribes", "users"
   add_foreign_key "user_playlists", "playlists"

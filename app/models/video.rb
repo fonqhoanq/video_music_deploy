@@ -6,6 +6,7 @@ class Video < ApplicationRecord
   has_one_attached :thumbnails
   has_many :feeling, dependent: :destroy
   has_many :member_notifications, dependent: :destroy
+  has_many :singer_notifications, dependent: :destroy
   has_many :playlist_videos, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :histories, dependent: :destroy

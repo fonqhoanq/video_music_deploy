@@ -6,6 +6,7 @@ class Singer < ApplicationRecord
          jwt_revocation_strategy: JwtDenylist
   has_many :videos, dependent: :destroy
   has_many :subscribes, dependent: :destroy
+  has_many :singer_notifications
   # has_many :replies
   has_one_attached :avatar
   def self.ransackable_attributes(auth_object = nil)
