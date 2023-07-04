@@ -64,4 +64,4 @@ set :stage, :production
 set :rails_env, :production
 set :deploy_to, "/deploy/apps/video_music_deploy"
 set :branch, :main
-server "52.194.224.76", user: "fonq", roles: %w(web app db)
+server "54.92.41.85", user: "fonq", roles: %w(web app db)
