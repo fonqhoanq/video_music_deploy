@@ -17,4 +17,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist
+  def self.ransackable_attributes(auth_object = nil)
+    ["age", "authentication_token", "created_at", "email", "encrypted_password", "id", "gender", "name", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at"]
+  end
 end

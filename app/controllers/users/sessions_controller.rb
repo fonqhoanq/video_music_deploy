@@ -19,10 +19,10 @@ class Users::SessionsController < Devise::SessionsController
   
     def login_success
       current_user
-      # render json: {
-      #   message: 'You are logged in.',
-      #   user: url_for(current_user.avatar)
-      # }, status: :ok
+      render json: {
+        user: current_user,
+        avatarUrl: url_for(current_user.avatar)
+      }, status: :ok
     end
     
     def login_failed
