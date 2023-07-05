@@ -21,7 +21,7 @@ class Singers::SessionsController < Devise::SessionsController
       # current_singer
       render json: {
         singer: current_singer,
-        avatarUrl: url_for(current_singer.avatar) if current_singer.avatar.attached?
+        avatarUrl: url_for(current_singer.avatar)
       }, status: :ok
     end
     
