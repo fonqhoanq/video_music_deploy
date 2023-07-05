@@ -19,10 +19,7 @@ class Singers::SessionsController < Devise::SessionsController
   
     def login_success
       # current_singer
-      render json: {
-        message: 'You are logged in.',
-        singer: current_singer
-      }, status: :ok
+      render json: current_singer
     end
     
     def login_failed
