@@ -18,8 +18,8 @@ class Singers::SessionsController < Devise::SessionsController
     end
   
     def login_success
-      # current_singer
-      render json: current_singer
+      current_singer
+      # render json: current_singer
     end
     
     def login_failed
