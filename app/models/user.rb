@@ -17,7 +17,7 @@ class User < ApplicationRecord
   }
   validates :name, length: {minimum:3, maximum:40}
   validates :age, numericality: { only_numeric: true }
-  def self.ransackable_attributes(auth_object = nil)
-    ["age", "authentication_token", "created_at", "email", "encrypted_password", "id", "gender", "name", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at"]
-  end
+  # def self.ransackable_attributes(auth_object = nil)
+  #   ["age", "authentication_token", "created_at", "email", "encrypted_password", "id", "gender", "name", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at"]
+  # end
 end
