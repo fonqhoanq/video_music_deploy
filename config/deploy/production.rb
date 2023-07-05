@@ -60,8 +60,8 @@
 #     # password: "please use keys"
 #   }
 # config valid only for current version of Capistrano
-set :stage, :production
-set :rails_env, :production
-set :deploy_to, "/deploy/apps/video_music_deploy"
-set :branch, :main
-server "54.178.84.204", user: "fonq", roles: %w(web app db)
+# set :stage, :production
+# set :rails_env, :production
+# set :deploy_to, "/deploy/apps/video_music_deploy"
+# set :branch, :main
+# server "18.179.15.54", user: "fonq", roles: %w(web app db)
