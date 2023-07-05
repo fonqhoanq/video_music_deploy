@@ -18,7 +18,7 @@ class Users::SessionsController < Devise::SessionsController
     end
   
     def login_success
-      current_user
+      # current_user
       render json: {
         user: current_user,
         avatarUrl: url_for(current_user.avatar)
