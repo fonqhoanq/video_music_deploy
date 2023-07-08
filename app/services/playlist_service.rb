@@ -39,4 +39,11 @@ class PlaylistService
       end
     end
   end
+
+  def create_playlist_for_user
+    hash_tags = HashTag.where.not(title: 'history')
+    hash_tags.each do |hash_tag|
+      create_playlist_by_hashtag(hash_tag.title)
+    end
+  end
 end
