@@ -7,6 +7,7 @@ class Singer < ApplicationRecord
   has_many :videos, dependent: :destroy
   has_many :subscribes, dependent: :destroy
   has_many :singer_notifications
+  has_many :singer_replies
   # has_many :replies
   has_one_attached :avatar
   def self.ransackable_attributes(auth_object = nil)
