@@ -41,6 +41,12 @@ class CommentsController < ApplicationController
       @comments = Comment.where(video_id: params[:video_id])
     end
 
+    def show_comments_for_singer
+      @comments = Comment.joins("INNER JOIN videos ON videos.id = comments.video_id")
+                          .where("videos.singer_id = ? ", params[:singer_id])
+                          .order(status: :asc, updated_at: :desc)
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_comment

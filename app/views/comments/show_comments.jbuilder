@@ -17,5 +17,16 @@ json.array! @comments do |comment|
     end
     json.createdAt reply.created_at
   end
+
+  json.singer_replies comment.singer_replies do |reply|
+    json.id reply.id
+    json.text reply.text
+    json.singer do
+      json.id reply.singer.id
+      json.username reply.singer.channel_name
+      json.avatarUrl url_for(reply.singer.avatar) if reply.singer.avatar.attached? 
+    end
+    json.createdAt reply.created_at
+  end
   json.createdAt comment.created_at
 end

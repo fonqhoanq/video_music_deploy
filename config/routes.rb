@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   resources :subscribes
 
   get "comments/videos", to:"comments#show_comments"
+  get "comments/singer", to:"comments#show_comments_for_singer"
   resources :comments
 
   resources :histories
@@ -68,6 +69,8 @@ Rails.application.routes.draw do
   resources :playlist_videos
 
   resources :replies
+  resources :singer_replies
+
   post "watch_later_videos/check_watch_later", to:"watch_later_videos#check_watch_later"
   resources :watch_later_videos
 
