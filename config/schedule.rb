@@ -18,17 +18,17 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.day, at: '10:50 am' do
+every 1.day, at: '10:57 am' do
   runner "TrendingScore.new.execute"
 end
-every 1.day, at: '10:10 am' do
+every 1.day, at: '10:58 am' do
   runner "PlaylistByTopicBatch.new.execute_singer_topic"
 end
 
-every 1.day, at: '3:08 pm' do
+every 1.day, at: '10:59 am' do
   runner "PlaylistByTopicBatch.new.execute_trending_topic"
 end
 
-every 1.day, at: '10:11 am' do
+every 1.day, at: '11:00 am' do
   runner "OwnPlaylistBatch.new.execute"
 end
