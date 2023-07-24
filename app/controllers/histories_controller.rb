@@ -44,6 +44,10 @@ class HistoriesController < ApplicationController
       @history.destroy
     end
   
+    def search_history
+      @history_searchs = History.where(user_id: params[:user_id], history_type: :search).order("created_at DESC").limit(10)
+    end
+  
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_history

@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
   resources :histories
 
+  get "histories/search", to: "histories#search_history"
   get "search", to:"searchs#index"
 
   resources :categories, only: [:index]
@@ -74,10 +75,13 @@ Rails.application.routes.draw do
   post "watch_later_videos/check_watch_later", to:"watch_later_videos#check_watch_later"
   resources :watch_later_videos
 
+  get "own_playlists/mix_playlist", to:"own_playlists#show_mix_playlist"
   get "own_playlists/check_video", to:"own_playlists#check_video"
   post "own_playlist_videos/add_video", to:"own_playlist_videos#create"
   post "own_playlist_videos/remove_video", to:"own_playlist_videos#remove_video"
   resources :own_playlists
   resources :own_playlist_videos
+  get "playlist_by_topics/singer_topic_playlist", to:"playlist_by_topics#show_singer_topic_playlist"
+  resources :playlist_by_topics
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

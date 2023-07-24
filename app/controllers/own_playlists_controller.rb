@@ -4,7 +4,7 @@ class OwnPlaylistsController < ApplicationController
 
     # GET /own_playlists
     def index
-        @own_playlists = OwnPlaylist.where(user_id: params[:user_id]).order("created_at DESC")
+        @own_playlists = OwnPlaylist.where(user_id: params[:user_id], playlist_type: :individual_playlist).order("created_at DESC")
     end
 
     # GET /own_playlists/1
@@ -18,6 +18,10 @@ class OwnPlaylistsController < ApplicationController
                                   .where(user_id: params[:user_id])
     end
 
+    def show_mix_playlist
+      @mix_daily_playlists = OwnPlaylist.where(user_id: params[:user_id], playlist_status: :is_public)
+                                        .where("playlist_type = 1 OR playlist_type = 2")
+    end
     # POST /own_playlists
     def create
       ActiveRecord::Base.transaction do

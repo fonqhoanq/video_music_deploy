@@ -6,5 +6,10 @@ class OwnPlaylist < ApplicationRecord
     unlisted: 1,
     is_public: 2
   }
+  enum playlist_type: {
+    individual_playlist: 0,
+    mix_playlist: 1,
+    daily_playlist: 2,
+  }
 end
   

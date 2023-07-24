@@ -1,6 +1,6 @@
 
 # Change these
-server '54.199.17.60', port: 22, roles: [:web, :app, :db], primary: true
+server '52.194.220.88', port: 22, roles: [:web, :app, :db], primary: true
 set :repo_url,    'git@github.com:fonqhoanq/video_music_deploy.git'  
 set :application,   'video_music_api'
 set :user, 'fonq'
@@ -89,6 +89,17 @@ namespace :sidekiq do
     end
   end
 end
+
+namespace :deploy do
+  task :update_crontab do
+    on roles(:all) do
+      within current_path do
+        execute :bundle, :exec, :whenever, "--update-crontab --set environment=development", "/deploy/apps/video_music_deploy/current/config/schedule.rb"
+      end
+    end
+  end
+end
+after 'deploy:symlink:release', 'deploy:update_crontab'
 
 after 'deploy:starting', 'sidekiq:quiet'
 after 'deploy:reverted', 'sidekiq:restart'
