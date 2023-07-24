@@ -94,7 +94,7 @@ namespace :deploy do
   task :update_crontab do
     on roles(:all) do
       within current_path do
-        execute :bundle, :exec, :whenever, "--update-crontab --set environment=development", "/deploy/apps/video_music_deploy/current/config/schedule.rb"
+        execute :bundle, :exec, :whenever, "--update-crontab" , "/deploy/apps/video_music_deploy/current/config/schedule.rb", "--set environment=development"
       end
     end
   end
