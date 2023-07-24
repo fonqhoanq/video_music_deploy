@@ -21,7 +21,7 @@
 every 1.day, at: '10:50 am' do
   runner "TrendingScore.new.execute"
 end
-every 1.day, at: '2:21 pm' do
+every 1.day, at: '9:40 pm' do
   runner "PlaylistByTopicBatch.new.execute_singer_topic"
 end
 
@@ -29,6 +29,6 @@ every 1.day, at: '3:08 pm' do
   runner "PlaylistByTopicBatch.new.execute_trending_topic"
 end
 
-every 1.day, at: '3:17 pm' do
+every 1.day, at: '9:42 pm' do
   runner "OwnPlaylistBatch.new.execute"
 end

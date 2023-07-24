@@ -1,6 +1,6 @@
 
 # Change these
-server '52.194.220.88', port: 22, roles: [:web, :app, :db], primary: true
+server '54.248.213.92', port: 22, roles: [:web, :app, :db], primary: true
 set :repo_url,    'git@github.com:fonqhoanq/video_music_deploy.git'  
 set :application,   'video_music_api'
 set :user, 'fonq'
