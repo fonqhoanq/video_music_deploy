@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :singers
   post "/singer/signup", to:"singers#create"
 
+  get "videos/new_release", to:"videos#show_new_release_videos"
   get "videos/recommend_after_watching", to:"videos#show_recommend_after_watching"
   get "videos/recommend_for_playlist", to:"videos#show_recommend_for_playlist"
   get "videos/singer", to:"videos#show_singer_videos"
@@ -50,10 +51,10 @@ Rails.application.routes.draw do
   get "comments/videos", to:"comments#show_comments"
   get "comments/singer", to:"comments#show_comments_for_singer"
   resources :comments
-
+  
+  get "histories/search", to: "histories#search_history"
   resources :histories
 
-  get "histories/search", to: "histories#search_history"
   get "search", to:"searchs#index"
 
   resources :categories, only: [:index]

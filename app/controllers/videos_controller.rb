@@ -118,6 +118,13 @@ class VideosController < ApplicationController
                                             .paginate(page: params[:page], per_page: 12)
   end
 
+  def show_new_release_videos
+    @new_release_videos = Video.where(video_status: :is_public)
+                               .order(created_at: :desc)
+                               .limit(10)
+                               .order("RAND()")
+  end
+
   def update_thumbnails
     if @video.update(thumbnails_params)
       render json: {thumbnails: url_for(@video.thumbnails)}
