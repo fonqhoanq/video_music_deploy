@@ -136,26 +136,8 @@ class VideosController < ApplicationController
   def update_views
     duration = params[:duration].to_f
     current_time = params[:current_time].to_f
-    if duration < 60.0 && current_time != duration
-      render json: {message: "Cant update views for this video"}
-      return
-    end
-    if (60..240).include?(duration) && current_time / duration < 0.7
-      render json: {message: "Cant update views for this video"}
-      return
-    end
-    if duration > 240 && current_time / duration < 0.5
-      render json: {message: "Cant update views for this video"}
-      return
-    end
-    ActiveRecord::Base.transaction do
-      History.create!(user_id: params[:user_id], video_id: params[:id], history_type: :watch, current_time: current_time, duration: duration)
-      if @video.increment!(:views)
-        render json: @video
-      else
-        render json: @video.errors, status: :unprocessable_entity
-      end
-    end
+    user_id = params[:user_id]
+    CalculateViewWorker.perform_async(@video.id,user_id, duration, current_time)
   end
 
   def show_videos_by_category
