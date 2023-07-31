@@ -8,6 +8,7 @@ class MemberNotification < ApplicationRecord
     deleted: 3
   }
   enum noti_type: {
-    recent_upload_video_notification: 0
+    recent_upload_video_notification: 0,
+    comming_video_notification: 1
   }
 end

@@ -6,7 +6,9 @@ class MemberNotificationsController < ApplicationController
   end
 
   def show_recent_videos_notifications
-    @member_notifications = MemberNotification.where(user_id: params[:user_id], noti_status: :sent, noti_type: params[:noti_type]).order(read_at: :asc)
+    @member_notifications = MemberNotification.where(user_id: params[:user_id], noti_status: :sent)
+                                              .order(read_at: :asc)
+                                              .order(created_at: :desc)
   end
 
   def update

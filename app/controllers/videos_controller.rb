@@ -27,6 +27,7 @@ class VideosController < ApplicationController
       handle_send_notification(@video, params[:video][:title]) if @video.title.blank? && params[:video][:video_status] != 'scheduling'
 
       handle_send_scheduling_video_notification(@video, params[:video][:title], params[:video][:singer_id]) if @video.title.blank? && params[:video][:video_status] == 'scheduling'
+      handle_send_scheduling_video_notification_for_member(@video, params[:video][:title], params[:upload_video_at]) if @video.title.blank? && params[:video][:video_status] == 'scheduling'
 
       @video.update!(update_params)
       VideoHashTag.where(video_id: @video.id).destroy_all
@@ -114,7 +115,8 @@ class VideosController < ApplicationController
     video_ids = @recent_upload_video_ids.union(@top_views_video_ids).union(@watched_video_ids).union(@same_category_video_ids)
 
     @recommend_after_watching_videos = Video.where(id: video_ids)
-                                            .where.not(id: @video.id)    
+                                            .where.not(id: @video.id)
+                                            .order("RAND()")
                                             .paginate(page: params[:page], per_page: 12)
   end
 
@@ -176,6 +178,17 @@ class VideosController < ApplicationController
                               )
   end
 
+  def handle_send_scheduling_video_notification_for_member(video, title, schedule_at)
+    target_members_to_sent_notification.each do |member|
+      MemberNotification.create!(video_id: video.id,
+                                  content: "Comming video: #{title}. Upload at #{schedule_at}",
+                                  user_id: member.id,
+                                  noti_status: :sent,
+                                  noti_type: :comming_video_notification
+      )
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_video

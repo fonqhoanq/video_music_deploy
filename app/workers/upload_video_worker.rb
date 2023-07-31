@@ -10,6 +10,8 @@ class UploadVideoWorker
     return unless video.uploaded_video_at.blank?
     ActiveRecord::Base.transaction do
       video.update!(uploaded_video_at: Time.current, video_status: :is_public)
+      handle_delete_member_notification(video)
+      handle_delete_singer_notification(video)
       handle_send_notification(video)
       handle_send_notification_for_singer(video)
     end
@@ -56,5 +58,13 @@ class UploadVideoWorker
                                noti_status: :sent,
                                noti_type: :scheduled_success_video_notification
                               )
+  end
+
+  def handle_delete_member_notification(video)
+    MemberNotification.where(video_id: video.id, noti_type: :comming_video_notification).destroy_all
+  end
+
+  def handle_delete_singer_notification(video)
+    SingerNotification.where(video_id: video.id, noti_type: :scheduling_video_notification).destroy_all
   end
 end
