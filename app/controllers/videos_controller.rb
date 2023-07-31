@@ -54,7 +54,7 @@ class VideosController < ApplicationController
   def show_public_videos
     @public_videos = Video.where(video_status: :is_public)
                           .paginate(page: params[:page], per_page: 12)
-                          .order("created_at DESC")
+                          .order("RAND()")
   end
   
   def show_singer_public_videos
@@ -65,9 +65,6 @@ class VideosController < ApplicationController
 
   def show_trending_videos
     videos = Video.all
-    if should_execute_calculate_trending_score?(videos.first)
-      CalculateTrendingScoreService.new(videos).execute
-    end
     @trending_videos = Video.where(video_status: :is_public)
                             .order(trending_score: :desc)
                             .paginate(page: params[:page], per_page: 12)
@@ -86,7 +83,10 @@ class VideosController < ApplicationController
                             .where("own_playlists.user_id = #{params[:user_id]}")
                             .where("own_playlists.id = #{params[:playlist_id]}")
                             .map(&:id)
-    @recommend_for_playlist_videos = Video.where.not(id: @playlist_video_ids)
+    category_ids = Video.where(id: @playlist_video_ids).map(&:category_id).uniq
+    videos = Video.where(category_id: category_ids, video_status: :is_public)
+    @recommend_for_playlist_videos = videos.where.not(id: @playlist_video_ids)
+                                          .order("RAND()")
                                           .limit(5)
   end
 
