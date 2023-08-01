@@ -12,3 +12,7 @@ end
 every 1.day, at: '11:19 am' do
   runner "OwnPlaylistBatch.new.execute"
 end
+
+every 1.day, at: '11:20 am' do
+  runner "PlaylistBatch.new.exec_playlist"
+end

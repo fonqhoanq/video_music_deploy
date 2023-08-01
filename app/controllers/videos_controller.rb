@@ -116,8 +116,8 @@ class VideosController < ApplicationController
 
     @recommend_after_watching_videos = Video.where(id: video_ids)
                                             .where.not(id: @video.id)
-                                            .order("RAND()")
                                             .paginate(page: params[:page], per_page: 12)
+                                            .order("RAND()")
   end
 
   def show_new_release_videos
