@@ -18,11 +18,11 @@ class Singers::SessionsController < Devise::SessionsController
     end
   
     def login_success
-      # current_singer
-      render json: {
-        singer: current_singer,
-        avatarUrl: url_for(current_singer.avatar)
-      }, status: :ok
+      current_singer
+      # render json: {
+      #   singer: current_singer,
+      #   avatarUrl: url_for(current_singer.avatar)
+      # }, status: :ok
     end
     
     def login_failed
