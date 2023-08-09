@@ -10,7 +10,10 @@ class PlaylistByTopicsController < ApplicationController
   end
 
   def show_singer_topic_playlist
-    @playlists = PlaylistByTopic.where(playlist_type: :singer_topic).where.not(video_numbers: 0)
+    @playlists = PlaylistByTopic.where(playlist_type: :singer_topic)
+                                .where.not(video_numbers: 0)
+                                .order("RAND()")
+                                .limit(20)
   end
 
   private
